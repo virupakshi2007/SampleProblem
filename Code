@@ -1,0 +1,58 @@
+public class Draw {
+    public static void drawLine(int x1, int y1, int x2, int y2) {
+        System.out.println("Drawing line from (" + x1 + ", " + y1 + ") to (" + x2 + ", " + y2 + ")");
+    }
+
+    public static void drawSquare(int x, int y, int len) {
+        int adjustedLen = Math.min(len, Math.min(10 - x, y));
+
+        drawLine(x, y, x + adjustedLen, y);
+        drawLine(x + adjustedLen, y, x + adjustedLen, y - adjustedLen);
+        drawLine(x + adjustedLen, y - adjustedLen, x, y - adjustedLen);
+        drawLine(x, y - adjustedLen, x, y);
+
+        System.out.println("side length = " + adjustedLen + ", area = " + (adjustedLen * adjustedLen));
+
+        drawGrid(x, y, adjustedLen);
+    }
+
+    private static void drawGrid(int x, int y, int len) {
+        char[][] grid = new char[11][11];
+        
+        // Initialize grid with dots
+        for (int i = 0; i <= 10; i++) {
+            for (int j = 0; j <= 10; j++) {
+                grid[i][j] = '.';
+            }
+        }
+
+        // Draw the square
+        for (int i = x; i <= x + len; i++) {
+            grid[y][i] = '*';
+            grid[y - len][i] = '*';
+        }
+        for (int i = y - len; i <= y; i++) {
+            grid[i][x] = '*';
+            grid[i][x + len] = '*';
+        }
+
+        // Print the grid
+        System.out.println("y");
+        for (int i = 10; i >= 0; i--) {
+            System.out.printf("%2d ", i);
+            for (int j = 0; j <= 10; j++) {
+                System.out.print(grid[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("   0 1 2 3 4 5 6 7 8 9 10");
+        System.out.println("                         x");
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        drawSquare(1, 4, 3);
+        drawSquare(6, 8, 5);
+        drawSquare(7, 2, 4);
+    }
+}
